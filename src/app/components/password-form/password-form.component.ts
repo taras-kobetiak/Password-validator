@@ -53,7 +53,7 @@ export class PasswordFormComponent implements OnInit, OnDestroy {
   }
 
   isSymbolsChecking(password: string): void {
-    let symbols = /[`!@#$%^&*()_/|}{}/-]/g;
+    let symbols = /[`"!@#$%^&*()_/|}{}/-]/g;
     if (password.match(symbols)) {
       this.passwordLevel++;
     }
