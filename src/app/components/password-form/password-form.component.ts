@@ -16,8 +16,8 @@ export class PasswordFormComponent implements OnInit, OnDestroy {
   isLetters: boolean;
   isDigits: boolean;
   isSymbols: boolean;
-
   passwordLevel: number = 0;
+
   private unsubscribingData$: Subject<void> = new Subject<void>();
 
   ngOnInit(): void {
