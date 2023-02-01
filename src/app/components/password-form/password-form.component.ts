@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -9,13 +9,7 @@ import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 })
 export class PasswordFormComponent implements OnInit, OnDestroy {
 
-  myForm: FormGroup = new FormGroup({
-    password: new FormControl('', [Validators.required, Validators.minLength(8)])
-  })
-
-  isLetters: boolean;
-  isDigits: boolean;
-  isSymbols: boolean;
+  passwordForm: FormControl = new FormControl('', [Validators.required, Validators.minLength(8)])
   passwordLevel: number = 0;
 
   private unsubscribingData$: Subject<void> = new Subject<void>();
@@ -25,12 +19,11 @@ export class PasswordFormComponent implements OnInit, OnDestroy {
   }
 
   passwordTesting(): void {
-    this.myForm.get('password')?.valueChanges.pipe(
-      debounceTime(500),
+    this.passwordForm.valueChanges.pipe(
+      debounceTime(200),
       distinctUntilChanged(),
       takeUntil(this.unsubscribingData$)
     ).subscribe((password: string) => {
-      this.isDigits, this.isLetters, this.isSymbols = false;
       this.passwordLevel = 0;
       this.isDigitChecking(password);
       this.isLettersChecking(password);
